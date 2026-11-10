@@ -73,7 +73,7 @@ h2 em{font-style:normal;color:var(--neon)}
 /* HERO */
 .hero{position:relative;background:var(--abyss)}
 .hero .ph{position:relative;height:52svh;min-height:340px;max-height:640px;overflow:hidden}
-.hero .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;animation:zoomout 2.4s var(--ease) both}
+.hero .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;animation:zoomout 2.4s var(--ease)}
 .hero .ph:after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(0deg,var(--abyss),transparent)}
 @keyframes zoomout{from{transform:scale(1.12)}to{transform:scale(1)}}
 .hero .in{position:relative;margin-top:-34px;padding:0 var(--pad) 56px}
@@ -103,6 +103,10 @@ body.pre-on .hero h1 span>i,body.pre-on .hero .cta,body.pre-on .hero p.tag,body.
 @keyframes wave{to{transform:translateX(-600px)}}
 .wvc{overflow:hidden;line-height:0}
 
+.mq{overflow:hidden;background:#0a2a4a;border-block:1px solid rgba(255,255,255,.1);padding:14px 0}
+.mt{display:flex;width:max-content;gap:26px;font:900 30px var(--fd);text-transform:uppercase;letter-spacing:.06em;color:#fff;animation:mq 28s linear infinite}
+.mt i{font-style:normal;color:var(--neon);font-size:16px;align-self:center}
+@keyframes mq{to{transform:translateX(-50%)}}
 /* SONAR */
 .sonar{position:relative;background:linear-gradient(180deg,#0a2a4a 0%,#0b1c3c 22%,#0b1230 55%,#05070f 100%)}
 .sonar .track{height:calc(100svh + 4 * 62svh)}
@@ -273,6 +277,7 @@ footer a{color:#c9cde0;text-decoration:underline}
 </section>
 <div class="wvc" style="background:var(--abyss)"><svg class="wv" viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path fill="#0a2a4a" d="M0 23 Q150 0 300 23T600 23T900 23T1200 23T1500 23T1800 23V46H0Z"/></svg></div>
 
+<div class="mq" aria-hidden="true"><div class="mt"><span>Batismo</span><i>●</i><span>Credenciados</span><i>●</i><span>Cursos PADI</span><i>●</i><span>Noturno</span><i>●</i><span>Alcatrazes</span><i>●</i><span>Ilhabela</span><i>●</i><span>Batismo</span><i>●</i><span>Credenciados</span><i>●</i><span>Cursos PADI</span><i>●</i><span>Noturno</span><i>●</i><span>Alcatrazes</span><i>●</i><span>Ilhabela</span><i>●</i></div></div>
 <!-- SONAR -->
 <section class="sonar" id="pontos">
   <div class="track" id="track">
@@ -426,7 +431,9 @@ if(document.body.classList.contains('pre-on')){
 /* NAV */
 var nav=$('#nav'),fab=$('#fab'),ly=0,tk=false,ty=0;
 function setHide(h){nav.classList.toggle('hide',h)}
-function onS(){var y=window.scrollY||0;if(y<=60)setHide(false);else if(y>ly+4)setHide(true);else if(y<ly-6)setHide(false);ly=y;fab.classList.toggle('on',y>innerHeight*.5);tk=false}
+addEventListener('wheel',function(e){if(e.deltaY>4&&(window.scrollY||0)>30)setHide(true);else if(e.deltaY<-4)setHide(false)},{passive:true});
+var hi=document.querySelector('.hero .ph img');
+function onS(){var y=window.scrollY||0;if(hi&&y<innerHeight)hi.style.transform='translateY('+(y*.18)+'px) scale(1.04)';if(y<=30)setHide(false);else if(y>ly+2)setHide(true);else if(y<ly-6)setHide(false);ly=y;fab.classList.toggle('on',y>innerHeight*.5);tk=false}
 addEventListener('scroll',function(){if(!tk){tk=true;requestAnimationFrame(onS)}},{passive:true});
 addEventListener('touchstart',function(e){ty=e.touches[0].clientY},{passive:true});
 addEventListener('touchmove',function(e){var d=e.touches[0].clientY-ty;if(d<-6&&(window.scrollY||0)>30)setHide(true);else if(d>10)setHide(false)},{passive:true});
